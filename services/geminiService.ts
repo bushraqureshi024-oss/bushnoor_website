@@ -1,7 +1,15 @@
 import { GoogleGenAI } from "@google/genai";
 import { ImageResolution } from '../types';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Lazy initialization helper
+const getAI = () => {
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
+    console.error("API Key is missing. Please add API_KEY to your environment variables.");
+    throw new Error("API Key is not configured");
+  }
+  return new GoogleGenAI({ apiKey });
+};
 
 // Chatbot functionality
 export const sendChatMessage = async (
@@ -9,6 +17,7 @@ export const sendChatMessage = async (
   history: { role: string; parts: { text: string }[] }[]
 ): Promise<string> => {
   try {
+    const ai = getAI();
     const chat = ai.chats.create({
       model: 'gemini-3-pro-preview', // High quality for customer service
       config: {
@@ -35,6 +44,8 @@ export const generateTryOnImage = async (
   resolution: ImageResolution = ImageResolution.RES_1K
 ): Promise<string> => {
   try {
+    const ai = getAI();
+    
     // 1. Fetch the product image and convert to base64
     const productResp = await fetch(productImageUrl);
     const productBlob = await productResp.blob();
