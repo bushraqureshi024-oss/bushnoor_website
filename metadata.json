@@ -1,0 +1,8 @@
+{
+  "name": "BushNoor",
+  "description": "Premium party and wedding wear clothing brand featuring AI-powered virtual try-on and customer assistance.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
