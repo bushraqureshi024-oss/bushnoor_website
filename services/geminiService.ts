@@ -1,8 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 import { ImageResolution } from '../types';
 
-const apiKey = process.env.API_KEY || '';
-const ai = new GoogleGenAI({ apiKey });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 // Chatbot functionality
 export const sendChatMessage = async (
